@@ -22,7 +22,7 @@ class IBM_Text_To_Speech():
 
         text_to_speech.set_service_url(URL)
 
-        with open(f'static/audios/{self.filename}.wav', 'wb') as audio_file:
+        with open(f'static/{self.filename}.wav', 'wb') as audio_file:
             audio_file.write(
                 text_to_speech.synthesize(
                     self.text,

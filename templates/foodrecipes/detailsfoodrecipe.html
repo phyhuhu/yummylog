@@ -39,9 +39,9 @@
       </form>
       {%else %}
         {% if meal.source %}
-          <audio controls src="/static/audios/create_food_{{meal.id}}.wav" style="height: 32px;"></audio>
+          <audio controls src="/static/create_food_{{meal.id}}.wav" style="height: 32px;"></audio>
         {% else %}
-        <audio controls src="/static/audios/search_food_{{meal.id_in_api}}.wav" style="height: 32px;"></audio>
+        <audio controls src="/static/search_food_{{meal.id_in_api}}.wav" style="height: 32px;"></audio>
         {% endif %}
       {% endif %}
     </div>

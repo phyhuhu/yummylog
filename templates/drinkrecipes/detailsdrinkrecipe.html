@@ -39,9 +39,9 @@
       </form>
       {%else %}
         {% if drink.source %}
-          <audio controls src="/static/audios/create_drink_{{drink.id}}.wav" style="height: 32px;"></audio>
+          <audio controls src="/static/create_drink_{{drink.id}}.wav" style="height: 32px;"></audio>
         {% else %}
-          <audio controls src="/static/audios/search_drink_{{drink.id_in_api}}.wav" style="height: 32px;"></audio>
+          <audio controls src="/static/search_drink_{{drink.id_in_api}}.wav" style="height: 32px;"></audio>
         {% endif %}
       {% endif %}
     </div>
