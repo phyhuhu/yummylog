@@ -1,0 +1,89 @@
+{% extends 'fooddrinkrecipes.html' %}
+
+{% block subsubcontent %}
+
+<div class="row" style="width: 90%;">
+  <div class="col-4" style="left:2%;">
+    <img src="{{ g.user.image_url }}" alt="Image for {{ g.user.username }}" id="profile-avatar" style="width:90%;">
+
+    <h5 id="sidebar-username">@{{ g.user.username }}</h5>
+    <h6>{{ g.user.level.capitalize() }}</h6>
+    <p class="user-location"><span class="fa fa-map-marker"></span> {{ g.user.location }}</p>
+    <p>{{ g.user.bio }}</p>
+  </div>
+
+  <div class="col" style="left:4%;">
+    <h2>{{ drink.drink_name }}</h2>
+    <div style="display: flex;">
+      {% if drink.source and drink.user_id==g.user.id %}
+      <div>
+        <p>
+          <a type='btn' class="btn btn-outline-primary btn-sm" href='/drink/edit/{{drink.id}}'>Edit</a>
+        </p>
+      </div>
+      {% endif %}
+      
+      {% if not drink.user_id==g.user.id %}
+      <form method="POST" action="/drink/{{drink.id}}/likes" class="messages-like">
+        <button type='btn' class="btn {{'btn-outline-primary' if drink in g.user.drink_likes else 'btn-outline-secondary'}} btn-sm" style="border-radius: 50%;">
+          <i class="fa fa-thumbs-up" style="font-size:20px;"></i>
+        </button>
+      </form>
+      {% endif %}
+      
+      {% if not drink.speech %}
+      <form method="POST" action="/drink/{{drink.id}}/speech">
+        <button type='btn' class="btn btn-outline-secondary btn-sm" style="border-radius: 50%;">
+          <i class="fa fa-microphone" style="font-size:20px;"></i> 
+        </button>
+      </form>
+      {%else %}
+        {% if drink.source %}
+          <audio controls src="/static/audios/create_drink_{{drink.id}}.wav" style="height: 32px;"></audio>
+        {% else %}
+          <audio controls src="/static/audios/search_drink_{{drink.id_in_api}}.wav" style="height: 32px;"></audio>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    <ul class="list-group">
+      <img src={{ drink.drink_photo_url }} style="width:60%;">
+
+      <h5>Category: {{ drink.drink_category.drink_category }}</h5>
+      
+      {% if drink.alcoholic %}
+        <h5>Alcoholic: Yes</h5>
+      {% else %}
+        <h5>Alcoholic: No</h5>
+      {% endif %}
+
+      <h5>Ingredients:</h5>
+      <table class="table table-borderless" style="width:50%;">
+        {% for ing in drink_ingredients %}
+        <tbody>
+          <tr>
+            <li>{{ ing }}: {{ drink_ingredients[ing] }}</li>
+          </tr>
+        </tbody>
+        {% endfor %}
+      </table>
+
+      <h5>Instructions:</h5>
+      <table class="table table-borderless">
+        {% for item in drink.drink_instructions.split('.') %}
+        {% if item!='' %}
+        <tbody>
+          <tr>
+            <li>{{item}}.</li>
+          </tr>
+        </tbody>
+        {% endif %}
+        {% endfor %}
+      </table>
+
+    </ul>
+
+  </div>
+</div>
+
+{% endblock %}

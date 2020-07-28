@@ -1,0 +1,45 @@
+{% extends 'body_background.html' %}
+
+{% block subcontent %}
+
+<div class="container" style="width: 500px; top:5%; left:35%;">
+  <div class="card bg-light mb-3">
+      <div class="card-header" style="font-size: 25px; text-align: center;">Edit Your Profile.</div>
+      <div class="card-body">
+        {% for mesg in get_flashed_messages() %}
+          <h2 style='color: red'>{{ mesg }}</h2>
+        {% endfor %}
+        <form method="POST">
+        {{ form.hidden_tag() }}
+    
+          {% for field in form if field.widget.input_type != 'hidden' and field.name != 'password' %}
+          <div class="input-group mb-3">
+            <label>{{ field.label}}:</label>
+            <div class="input-group input-group-sm-3">
+              {{ field(placeholder=field.label.text, class="form-control") }}
+            </div>
+    
+            {% for error in field.errors %}
+              <p class='text-danger'>{{ error }}</h6>
+            {% endfor %}
+          </div>
+          {% endfor %}
+    
+          <p>To confirm changes, enter your password:</p>
+          {% if form.password.errors %}
+            {% for error in form.password.errors %}
+              <span class="text-danger">
+                {{ error }}
+              </span>
+            {% endfor %}
+          {% endif %}
+          {{ form.password(placeholder="Enter your password to confirm", class="form-control") }}
+    
+          <a type="button" class="btn btn-outline-primary" href='/users/{{ user_id }}'>Cancel</a>
+          <button type="submit" class="btn btn-outline-primary">Edit</button>
+        </form>
+      </div>
+  </div>
+</div>
+
+{% endblock %}

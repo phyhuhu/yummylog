@@ -1,0 +1,32 @@
+{% extends 'body_background.html' %}
+
+{% block subcontent %}
+
+<div class="container" style="width: 500px; top:5%; left:35%;">
+  <div class="card bg-light mb-3">
+      <div class="card-header" style="font-size: 25px; text-align: center;">Edit your drink recipes.</div>
+      <div class="card-body">
+        <form method="POST" enctype="multipart/form-data">
+          {{ form.hidden_tag() }}
+      
+          {% for field in form if field.widget.input_type != 'hidden' %}
+          <div class="input-group mb-3">
+            <label>{{ field.label }}:</label>
+            <div class="input-group input-group-sm-3">
+              {{ field(class="form-control") }}
+            </div>
+      
+            {% for error in field.errors %}
+              <p class='text-danger'>{{ error }}</h6>
+            {% endfor %}
+          </div>
+          {% endfor %}
+      
+          <a type="button" class="btn btn-outline-primary" href='/drink/create/{{drink_id}}'>Cancel</a>
+          <button type="submit" class="btn btn-outline-primary">Edit</button>
+        </form>
+      </div>
+  </div>
+</div>
+
+{% endblock %}

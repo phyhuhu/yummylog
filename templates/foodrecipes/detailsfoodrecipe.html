@@ -1,0 +1,103 @@
+{% extends 'fooddrinkrecipes.html' %}
+
+{% block subsubcontent %}
+
+<div class="row" style="width: 90%;">
+  <div class="col-4" style="left:2%;">
+    <img src="{{ g.user.image_url }}" alt="Image for {{ g.user.username }}" id="profile-avatar" style="width:90%;">
+
+    <h5 id="sidebar-username">@{{ g.user.username }}</h5>
+    <h6>{{ g.user.level.capitalize() }}</h6>
+    <p class="user-location"><span class="fa fa-map-marker"></span> {{ g.user.location }}</p>
+    <p>{{ g.user.bio }}</p>
+  </div>
+
+  <div class="col" style="left:4%;">
+    <h2>{{ meal.food_name }}</h2>
+    <div style="display: flex;">
+      {% if meal.source and meal.user_id==g.user.id %}
+      <div>
+        <p>
+          <a type='btn' class="btn btn-outline-primary btn-sm" href='/food/edit/{{meal.id}}'>Edit</a>
+        </p>
+      </div>
+      {% endif %}
+      
+      {% if not meal.user_id==g.user.id %}
+      <form method="POST" action="/food/{{meal.id}}/likes">
+        <button type='btn' class="btn {{'btn-outline-primary' if meal in g.user.food_likes else 'btn-outline-secondary'}} btn-sm" style="border-radius: 50%;">
+          <i class="fa fa-thumbs-up" style="font-size:20px;"></i>
+        </button>
+      </form>
+      {% endif %}
+
+      {% if not meal.speech %}
+      <form method="POST" action="/food/{{meal.id}}/speech">
+        <button type='btn' class="btn btn-outline-secondary btn-sm" style="border-radius: 50%;">
+          <i class="fa fa-microphone" style="font-size:20px;"></i> 
+        </button>
+      </form>
+      {%else %}
+        {% if meal.source %}
+          <audio controls src="/static/audios/create_food_{{meal.id}}.wav" style="height: 32px;"></audio>
+        {% else %}
+        <audio controls src="/static/audios/search_food_{{meal.id_in_api}}.wav" style="height: 32px;"></audio>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    <ul class="list-group">
+      <img src={{ meal.food_photo_url }} style="width:60%;">
+
+      <h5>Category: {{ meal.food_category.food_category }}</h5>
+
+      <h5>Area: {{ meal.food_area.food_area }}</h5>
+
+      <h5>Ingredients:</h5>
+      <table class="table table-borderless" style="width:50%;">
+        {% for ing in food_ingredients %}
+        <tbody>
+          <tr>
+            <li>{{ ing }}: {{ food_ingredients[ing] }}</li>
+          </tr>
+        </tbody>
+        {% endfor %}
+      </table>
+
+      <h5>Instructions:</h5>
+      <table class="table table-borderless">
+        {% for item in meal.food_instructions.split('.') %}
+        {% if item!='' %}
+        <tbody>
+          <tr>
+            <li>{{item}}.</li>
+          </tr>
+        </tbody>
+        {% endif %}
+        {% endfor %}
+      </table>
+
+      <h5>Nutritions:</h5>
+      <p>(List the nutritions for the ingredients in the database.)</p>
+      {%if total_nutritions!=0%}
+      <img src="data:image/png;base64, {{ url }}" style="width:80%;">
+      {%endif%}
+      {% for item in food_ingredients %}
+      {% if item!='' and ( food_nutritions[item]!= None and food_nutritions[item]!={} ) %}
+        <li>{{item}}: {{ food_ingredients[item] }}</li>
+          {% for i in food_nutritions[item] %}
+            {% if i=='Calories' %}
+              <p>{{i}}: {{food_nutritions[item][i]}}</p>
+            {% else %}
+              <p>{{i}}: {{food_nutritions[item][i]}}g</p>
+            {% endif %}
+          {% endfor %}
+      {% endif %}
+      {% endfor %}
+
+    </ul>
+
+  </div>
+</div>
+
+{% endblock %}

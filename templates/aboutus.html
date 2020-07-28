@@ -1,0 +1,166 @@
+{% extends 'body_background.html' %}
+{% block subcontent %}
+
+<nav class="navbar navbar-expand-lg navbar-light">
+  <a class="navbar-brand" href="/" style="font-size: 30px;">
+    Yummylog
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" 
+  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+  aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse w-100 order-3 dual-collapse2" id="navbarSupportedContent" style="font-size: 20px;">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/signup">Sign Up</a>
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" href="/login">Login</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<h2 style="text-align: center;">
+  About This Project
+</h2>
+<div class="container" style="width: 70%; position: absolute; left: 15%; margin-top: 30px; margin-bottom: 30px;">
+
+  <div class="row" style="margin-top: 30px;">
+    <div class="col-lg-3">
+      <h4 class="mb-4">Project Goals</h4>
+    </div>
+    
+    <div class="col-lg-8" style="font-size: 20px;">
+      <p>
+        Do you like yummy food? Do you like to share your food with foodies? 
+        This website is to designed to help you to search yummy food 
+        and share your food with people who also love yummy food all around the world.
+      </p>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 30px;">
+    <div class="col-lg-3">
+      <h4 class="mb-4">APIs & Data Invovled</h4>
+    </div>
+    
+    <div class="col-lg-8" style="font-size: 20px;">
+      <p>
+        This website connects to three APIs: TheMealDB API for food recipes 
+        (<a href="https://www.themealdb.com/api.php?ref=apilist.fun">
+          https://www.themealdb.com/api.php?ref=apilist.fun</a>),
+        TheCocktailDB for drink recipes 
+        (<a href="https://www.thecocktaildb.com/api.php?ref=apilist.fun">
+          https://www.thecocktaildb.com/api.php?ref=apilist.fun</a>),
+        the IBM text-to-speech API for transferring text to speech
+        (<a href="https://cloud.ibm.com/apidocs/text-to-speech?code=python">
+          https://cloud.ibm.com/apidocs/text-to-speech?code=python</a>).
+      </p>
+
+      <p>
+        <b>Please Note</b>: Both TheMealDB and TheCocktailDB APIs are free.
+        The IBM text-to-speech API has free 10,000 Characters per Month.
+        We just transfer the names of food or drink to speech.
+      </p>
+
+      <p>
+        In addition, we have used the BeautifulSoup to grab the food nutrition data 
+        from the website <a href="https://www.fatsecret.com">https://www.fatsecret.com</a>.
+        We have done rough data cleaning for those food nutrition data.
+      </p>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 30px;">
+    <div class="col-lg-3">
+      <h4 class="mb-4">Functionality</h4>
+    </div>
+    
+    <div class="col-lg-8" style="font-size: 20px;">
+      <li>Sign up with a unique username and E-Mail including hashed password.</li>
+
+      <li>Edit user profile details.</li>
+      
+      <li>Reset password with answering security questions.</li>
+      
+      <li>Find username and reset password with E-Mail used when signing up.</li>
+      
+      <li>
+        Search or create food and drink recipes from APIs.
+        <img src='/static/images/actions.png'>
+      </li>
+      
+      <li>Edit food or drink recipes that you created.</li>
+      
+      <li>
+        Four levels for users: 
+        Foodie (no recipes); 
+        Home Chef (1~5 recipes);
+        Junior Chef (6~10 recipes);
+        Head Chef (more than 11 recipes).
+      </li>
+      
+      <li>
+        Thumbs up for liking the food or drink recipes.
+      </li>
+      <img src='/static/images/f1.png'>
+      <img src='/static/images/f2.png'>
+
+      <li>
+        Transfer the food or drink names to speech.
+      </li>
+      <img src='/static/images/f3.png'>
+      <img src='/static/images/f4.png'>
+
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 30px;">
+    <div class="col-lg-3">
+      <h4 class="mb-4">Major Technologies</h4>
+    </div>
+    
+    <div class="col-lg-8" style="font-size: 20px;">
+      <li>Flask</li>
+        
+      <li>Flask SQLAlchemy</li>
+
+      <li>PostgreSQL</li>
+
+      <li>Flask-Login</li>
+
+      <li>Flask-Email</li>
+
+      <li>WTForms</li>
+
+      <li>Bootstrap</li>
+
+      <li>Jquery</li>
+
+      <li>DOM manipulation</li>
+
+      <li>Jinja</li>
+
+      <li>BeautifulSoup</li>
+
+      <li>Json</li>
+
+      <li>Requests</li>
+
+      <li>Fontawesome</li>
+
+      <li>Matplotlib</li>
+
+      <li>Numpy</li>
+
+      <li>Unittest</li>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'body_background.html' %}
+{% block subcontent %}
+
+<nav class="navbar navbar-expand-lg navbar-light">
+  <a class="navbar-brand" href="/" style="font-size: 30px;">
+    Yummylog
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" 
+  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+  aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse w-100 order-3 dual-collapse2" id="navbarSupportedContent" style="font-size: 20px;">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/aboutus">About Us</a>
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" href="/contact">Contact</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);">
+  <h2 style="text-align: center;">
+    Yeahhhhhh, Yummy Together!
+  </h2>
+
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <a class="nav-link" href="/signup" style="display: flex; justify-content: center; align-items: center; font-size:30px">Sign Up</a>
+    <a class="nav-link" href="/login" style="display: flex; justify-content: center; align-items: center; font-size:30px">Login</a>
+  </div>
+</div>
+
+{% endblock %}

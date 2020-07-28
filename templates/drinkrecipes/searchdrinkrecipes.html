@@ -1,0 +1,36 @@
+{% extends 'body_background.html' %}
+
+{% block subcontent %}
+
+<div class="container" style="width: 500px; top:5%; left:35%;">
+    <div class="card bg-light mb-3">
+        <div class="card-header" style="font-size: 25px; text-align: center;">Search drink recipes.</div>
+        <div class="card-body">
+            <form method="POST">
+                {{ form.hidden_tag() }}
+            
+                {% for field in form if field.widget.input_type != 'hidden' %}
+                <div class="input-group mb-3">
+                    <label>{{ field.label}}:</label>
+                    <div class="input-group input-group-sm-3">
+                        {{ field(class="form-control") }}
+                    </div>
+            
+                    {% for error in field.errors %}
+                        <p class='text-danger'>{{ error }}</h6>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+          
+                <a type="button" class="btn btn-outline-primary" href='/users/{{g.user.id}}'>Cancel</a>
+                <button type="submit" class="btn btn-outline-primary">Search</button>
+            </form>
+          
+            {% for mesg in get_flashed_messages() %}
+                <h2 style='color: red'>{{ mesg }}</h2>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

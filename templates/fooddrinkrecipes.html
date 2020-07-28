@@ -1,0 +1,47 @@
+{% extends 'body_background.html' %}
+
+{% block subcontent %}
+
+<nav class="navbar navbar-expand-lg navbar-light" >
+  <a class="navbar-brand" href="/users/{{ g.user.id }}/home" style="font-size: 30px;">
+    Yummylog
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" 
+  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+  aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse w-100 order-3 dual-collapse2" id="navbarSupportedContent" style="font-size: 20px;">
+    <ul class="navbar-nav ml-auto">
+      <form method="POST" class="dropdown form-inline">
+        <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Action
+        </button>
+        
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="dropdown-item" style="left:30%;">
+            <img src="{{ g.user.image_url }}" alt="Image for {{ g.user.username }}" id="profile-avatar" style="width:30%; border-radius: 50%;">
+            <a href="/users/{{ g.user.id }}">My Profile</a>
+          </div>
+
+          <a class="dropdown-item" href="/food/create">Create New Food Recipes</a>
+          <a class="dropdown-item" href="/drink/create">Create New Drink Recipes</a>
+          <a class="dropdown-item" href="/food/search">Search Food Recipes</a>
+          <a class="dropdown-item" href="/drink/search">Search Drink Recipes</a>
+          <a class="dropdown-item" href="/users/profile">Edit Profile</a>
+          <a class="dropdown-item" href="/logout">Logout</a>
+        </div>
+      </form>
+
+      <form method="POST" action="/users/delete" class="form-inline">
+        <button class="btn btn-outline-danger ml-2">Delete Profile</button>
+      </form>
+    </ul>
+  </div>
+</nav>
+
+{% block subsubcontent %}
+{% endblock %}
+
+{% endblock %}

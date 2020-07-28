@@ -1,0 +1,114 @@
+{% extends 'fooddrinkrecipes.html' %}
+
+{% block subsubcontent %}
+
+<div class="row" style="width: 90%;">
+  <div class="col-4" style="left:2%;">
+    <img src="{{ g.user.image_url }}" alt="Image for {{ g.user.username }}" id="profile-avatar" style="width:90%;">
+
+    <h5 id="sidebar-username">@{{ g.user.username }}</h5>
+    <h6>{{ g.user.level.capitalize() }}</h6>
+    <p class="user-location"><span class="fa fa-map-marker"></span> {{ g.user.location }}</p>
+    <p>{{ g.user.bio }}</p>
+  </div>
+
+  <div class="col" style="left:4%;">
+    <ul class="list-group">
+      <h2>My Food Recipes: {{food_recipes.count()}}</h2>
+
+      {% for food in food_recipes %}
+        <div class="container" style="margin: 8px;">
+          <div class="row align-items-start">
+            <div class="col">
+              <img src={{food.food_photo_url}} style="width:100%;">
+            </div>
+            <div class="col">
+              <p style="font-size: 20px;">
+                <b>
+                  {% if food.source %}
+                    <a href="/food/create/{{ food.id }}"> {{food.food_name}} </a>
+                  {% else %}
+                    <a href="/food/search/{{ food.id_in_api }}"> {{food.food_name}} </a>
+                  {% endif %}
+                </b>
+              </p>
+              <p style="font-size: 20px;">{{food.users_like_food | length}}
+                <i class="fa fa-thumbs-up" style="font-size:100%;color:#0275d8;"></i>
+              </p>
+              <p style="font-size: 20px;">Category: {{food.food_category.food_category}}</p>
+              <p style="font-size: 20px;">Area: {{food.food_area.food_area}}</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </ul>
+
+    <hr>
+
+    <ul class="list-group">
+      <h2>My Drink Recipes: {{drink_recipes.count()}}</h2>
+
+      {% for drink in drink_recipes %}
+        <div class="container" style="margin: 8px;">
+          <div class="row align-items-start">
+            <div class="col">
+              <img src={{drink.drink_photo_url}} style="width:100%;">
+            </div>
+            <div class="col">
+              <p style="font-size: 20px;">
+                <b>
+                  {% if drink.source %}
+                    <a href="/drink/create/{{ drink.id }}"> {{drink.drink_name}} </a>
+                  {% else %}
+                    <a href="/drink/search/{{ drink.id_in_api }}"> {{drink.drink_name}} </a>
+                  {% endif %}
+                </b>
+              </p>
+              <p style="font-size: 20px;">{{drink.users_like_drink | length}}
+                <i class="fa fa-thumbs-up" style="font-size:100%;color:#0275d8;"></i>
+              </p>
+              <p style="font-size: 20px;">Category: {{drink.drink_category.drink_category}}</p>
+              <p style="font-size: 20px;">Alcoholic: {% if drink.alcoholic%} Yes {% else %} No {% endif %}</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </ul>
+
+  </div>
+
+
+  <div class="col-3" style="left:10%;">
+
+    <div class="card bg-light mb-3" style="max-width: 18rem;">
+      <div class="card-header" style="font-size: 25px;">All Food Recipes:</div>
+      <div class="card-body">
+        {% for food in all_food %}
+          <p>
+            {% if food.source %}
+              <a href="/food/create/{{ food.id }}"> {{food.food_name}} </a>
+            {% else %}
+              <a href="/food/search/{{ food.id_in_api }}"> {{food.food_name}} </a>
+            {% endif %}
+          </p>
+        {% endfor %}
+      </div>
+
+      <div class="card-header" style="font-size: 25px;">All Drink Recipes:</div>
+      <div class="card-body">
+        {% for drink in all_drink %}
+          <p>
+            {% if drink.source %}
+              <a href="/drink/create/{{ drink.id }}"> {{drink.drink_name}} </a>
+            {% else %}
+              <a href="/drink/search/{{ drink.id_in_api }}"> {{drink.drink_name}} </a>
+            {% endif %}
+          </p>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'fooddrinkrecipes.html' %}
+
+{% block subsubcontent %}
+
+<div class="row" style="width: 90%;">
+  <div class="col-4" style="left:2%;">
+    <img src="{{ g.user.image_url }}" alt="Image for {{ g.user.username }}" id="profile-avatar" style="width:90%;">
+
+    <h5 id="sidebar-username">@{{ g.user.username }}</h5>
+    <h6>{{ g.user.level.capitalize() }}</h6>
+    <p class="user-location"><span class="fa fa-map-marker"></span> {{ g.user.location }}</p>
+    <p>{{ g.user.bio }}</p>
+  </div>
+
+  <div class="col" style="left:4%;">
+    <ul class="list-group">
+      {% if searchby=='1' %}
+        <h2>All Drink Recipes of {{searchinput.capitalize()}}:</h2>
+      {% elif searchby=='2' %}
+        <h2>All Drink Recipes with {{searchinput.capitalize()}}:</h2>
+      {% endif %}
+
+      {% for drink in drinks %}
+        <p style="font-size: 20px;">
+          <b>
+            <a href="/drink/search/{{ drink['idDrink'] }}"> {{ drink['strDrink'] }} </a>
+          </b>
+        </p>
+        <p><img src={{ drink['strDrinkThumb'] }} style="width:30%;"></p>
+      {% endfor %}
+    </ul>
+
+  </div>
+</div>
+
+{% endblock %}
