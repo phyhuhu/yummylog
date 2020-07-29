@@ -37,7 +37,7 @@ We have done rough data cleaning for those food nutrition data.
 - Find username and reset password with E-Mail used when signing up.
 - Search or create food and drink recipes from APIs.
 - Edit food or drink recipes that you created.
-- Four levels for users: Foodie (no recipes); Home Chef (1~5 recipes); Junior Chef (6~10 recipes); Head Chef (more than 11 recipes).
+- Four levels for users: Foodie (no recipes); Home Chef (1-5 recipes); Junior Chef (6-10 recipes); Head Chef (more than 11 recipes).
 - Thumbs up for liking the food or drink recipes.
 - Transfer the food or drink names to speech.
 
