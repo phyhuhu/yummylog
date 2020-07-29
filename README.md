@@ -20,6 +20,16 @@ TheCocktailDB for drink recipes
 the IBM text-to-speech API for transferring text to speech
 ([https://cloud.ibm.com/apidocs/text-to-speech?code=python](https://cloud.ibm.com/apidocs/text-to-speech?code=python)).
 
+**Please Note: 
+
+Both TheMealDB and TheCocktailDB APIs are free.
+The IBM text-to-speech API has free 10,000 Characters per Month.
+We just transfer the names of food or drink to speech.
+
+In addition, we have used the BeautifulSoup to grab the food nutrition data 
+from the website [https://www.fatsecret.com"](https://www.fatsecret.com).
+We have done rough data cleaning for those food nutrition data.
+
 
 ## Functionality
 
