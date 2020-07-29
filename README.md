@@ -37,7 +37,7 @@ the IBM text-to-speech API for transferring text to speech
 ## Major Technologies
 
 - Flask
-- Flask SQLAlchemy<
+- Flask SQLAlchemy
 - PostgreSQL
 - Flask-Login
 - Flask-Email
