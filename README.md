@@ -10,7 +10,7 @@ This website is to designed to help you to search yummy food
 and share your food with people who also love yummy food all around the world.
 
 
-## APIs & Data Invovled
+## APIs & Data Involved
 
 This website connects to three APIs: 
 TheMealDB API for food recipes 
