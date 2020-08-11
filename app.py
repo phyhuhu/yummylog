@@ -15,7 +15,7 @@ from calculate_nutritions import calculate_nutritions
 from plot_nutritions import plot_nutritions
 from create_speech import IBM_Text_To_Speech
 
-from secret import PW_GMAIL
+# from secret import PW_GMAIL
 
 
 CURR_USER_KEY = "curr_user"
@@ -36,7 +36,7 @@ bcrypt = Bcrypt()
 connect_db(app)
 
 # for sending gmail
-# PW_GMAIL=os.environ.get('PW_GMAIL')
+PW_GMAIL=os.environ.get('PW_GMAIL')
 
 mail_settings = {
     "MAIL_SERVER": 'smtp.gmail.com',
