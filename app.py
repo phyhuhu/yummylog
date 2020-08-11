@@ -15,7 +15,7 @@ from calculate_nutritions import calculate_nutritions
 from plot_nutritions import plot_nutritions
 from create_speech import IBM_Text_To_Speech
 
-# from secret import PW_GMAIL
+from secret import PW_GMAIL
 
 
 CURR_USER_KEY = "curr_user"
@@ -36,7 +36,7 @@ bcrypt = Bcrypt()
 connect_db(app)
 
 # for sending gmail
-PW_GMAIL=os.environ.get('PW_GMAIL')
+# PW_GMAIL=os.environ.get('PW_GMAIL')
 
 mail_settings = {
     "MAIL_SERVER": 'smtp.gmail.com',
@@ -593,9 +593,10 @@ def food_recipes_by_id(id):
 
         food_ingredients_dict={}
         for item in meal.food_ingredients.split(','):
-            if item!='':
+            if item!='' or item!=' ':
                 temp=item.split(':')
-                food_ingredients_dict[temp[0]]=temp[1]
+                if len(temp)>1:
+                    food_ingredients_dict[temp[0].lstrip()]=temp[1]
 
     food_nutritions_dict={}
     for ingredient in food_ingredients_dict:
@@ -619,8 +620,6 @@ def food_recipes_by_id(id):
         speech=False
     else:
         food_id_speech, speech=session['food_speech']
-
-    print('testsearchfood', speech)
 
     return render_template('foodrecipes/detailsfoodrecipe.html', meal=meal, total_nutritions=total_nutritions_dict['Calories'], food_nutritions=food_nutritions_dict, food_ingredients=food_ingredients_dict, url=plot_url, speech=speech)
 
@@ -730,9 +729,11 @@ def drink_recipes_by_id(id):
 
         drink_ingredients_dict={}
         for item in drink.drink_ingredients.split(','):
-            if item!='':
+            if item!='' or item!=' ':
                 temp=item.split(':')
-                drink_ingredients_dict[temp[0]]=temp[1]
+                if len(temp)>1:
+                    drink_ingredients_dict[temp[0].lstrip()]=temp[1]
+
 
     if 'drink_speech' not in session:
         session['drink_speech']=(drink.id,False)
@@ -742,8 +743,6 @@ def drink_recipes_by_id(id):
         speech=False
     else:
         drink_id_speech, speech=session['drink_speech']
-
-    print('testsearchdrink', speech)
 
     return render_template('drinkrecipes/detailsdrinkrecipe.html', drink=drink, drink_ingredients=drink_ingredients_dict, speech=speech)
 
@@ -844,8 +843,6 @@ def food_recipes_create_by_id(id):
         speech=False
     else:
         food_id_speech, speech=session['food_speech']
-
-    print('testcreatefood', speech)
 
     return render_template('foodrecipes/detailsfoodrecipe.html', meal=meal, total_nutritions=total_nutritions_dict['Calories'], food_nutritions=food_nutritions_dict, food_ingredients=food_ingredients_dict, url=plot_url, speech=speech)
 
@@ -994,8 +991,6 @@ def drink_recipes_create_by_id(id):
         speech=False
     else:
         drink_id_speech, speech=session['drink_speech']
-
-    print('testcreatedrink', speech)
 
     return render_template('drinkrecipes/detailsdrinkrecipe.html', drink=drink, drink_ingredients=drink_ingredients_dict, speech=speech)
 
