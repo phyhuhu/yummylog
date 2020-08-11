@@ -8,6 +8,7 @@ import requests, json, os
 
 from forms import UserSignUpForm, UserEditForm, UserLoginForm, UsernameForm, AnswerForm, ResetPWForm, EmailForm
 from forms import SearchFoodRecipesForm, SearchDrinkRecipesForm, CreateFoodRecipesForm, CreateDrinkRecipesForm
+
 from models import db, connect_db, Users, Questions, APIs
 from models import UsersFoodRecipesLikes, UsersDrinkRecipesLikes, FoodCategories, FoodAreas, FoodRecipes, DrinkCategories, DrinkRecipes
 from calculate_nutritions import calculate_nutritions
@@ -90,6 +91,12 @@ def do_login(user):
 
 def do_logout():
     """Logout user."""
+
+    if 'food_speech' in session:
+        del session['food_speech']
+
+    if 'drink_speech' in session:
+        del session['drink_speech']
 
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
@@ -384,10 +391,10 @@ def add_food_speech(food_id):
     """Toggle a liked food for the currently-logged-in user."""
 
     food = FoodRecipes.query.get_or_404(food_id)
+    food_id_speech, speech=session['food_speech']
 
-    if not food.speech:
-        food.speech=True
-        db.session.commit()
+    if food_id_speech == food_id:
+        session['food_speech']=(food_id,True)
 
         if not food.source:
             filename='search_food_'+str(food.id_in_api)
@@ -405,10 +412,10 @@ def add_drink_speech(drink_id):
     """Toggle a liked drink for the currently-logged-in user."""
 
     drink = DrinkRecipes.query.get_or_404(drink_id)
+    drink_id_speech, speech=session['drink_speech']
 
-    if not drink.speech:
-        drink.speech=True
-        db.session.commit()
+    if drink_id_speech == drink_id:
+        session['drink_speech']=(drink_id,True)
 
         if not drink.source:
             filename='search_drink_'+str(drink.id_in_api)
@@ -573,7 +580,6 @@ def food_recipes_by_id(id):
                 food_ingredients=food_ingredients,
                 food_instructions=meal_instructions,
                 food_photo_url=full_meal['strMealThumb'],
-                speech=False,
                 source=False,
                 api_id=1,
                 id_in_api=full_meal['idMeal'],
@@ -605,7 +611,18 @@ def food_recipes_by_id(id):
 
     plot_url=plot_nutritions(total_nutritions_dict).plot_figure()
 
-    return render_template('foodrecipes/detailsfoodrecipe.html', meal=meal, total_nutritions=total_nutritions_dict['Calories'], food_nutritions=food_nutritions_dict, food_ingredients=food_ingredients_dict, url=plot_url)
+    if 'food_speech' not in session:
+        session['food_speech']=(meal.id,False)
+        speech=False
+    elif session['food_speech'][0]!=meal.id:
+        session['food_speech']=(meal.id,False)
+        speech=False
+    else:
+        food_id_speech, speech=session['food_speech']
+
+    print('testsearchfood', speech)
+
+    return render_template('foodrecipes/detailsfoodrecipe.html', meal=meal, total_nutritions=total_nutritions_dict['Calories'], food_nutritions=food_nutritions_dict, food_ingredients=food_ingredients_dict, url=plot_url, speech=speech)
 
 
 ##############################################################################
@@ -700,7 +717,6 @@ def drink_recipes_by_id(id):
                 drink_instructions=drink_instructions,
                 drink_photo_url=full_drink['strDrinkThumb'],
                 alcoholic=drink_alcoholic,
-                speech=False,
                 source=False,
                 api_id=2,
                 id_in_api=full_drink['idDrink'],
@@ -718,7 +734,18 @@ def drink_recipes_by_id(id):
                 temp=item.split(':')
                 drink_ingredients_dict[temp[0]]=temp[1]
 
-    return render_template('drinkrecipes/detailsdrinkrecipe.html', drink=drink, drink_ingredients=drink_ingredients_dict)
+    if 'drink_speech' not in session:
+        session['drink_speech']=(drink.id,False)
+        speech=False
+    elif session['drink_speech'][0]!=drink.id:
+        session['drink_speech']=(drink.id,False)
+        speech=False
+    else:
+        drink_id_speech, speech=session['drink_speech']
+
+    print('testsearchdrink', speech)
+
+    return render_template('drinkrecipes/detailsdrinkrecipe.html', drink=drink, drink_ingredients=drink_ingredients_dict, speech=speech)
 
 ##############################################################################
 # Create Food Recipes routes:
@@ -737,18 +764,27 @@ def create_food_recipes():
     form.food_area_id.choices = areas
 
     if form.validate_on_submit():
-        food_photo = form.food_photo_url.data
-        filename = secure_filename(food_photo.filename)
-        food_photo.save('static/images/'+filename)
+        name_ingredients=request.form.getlist('food_ingredients_name')
+        quantity_ingredients=request.form.getlist('food_ingredients_quantity')
+        instructions=request.form.getlist('food_instructions')
+
+        food_ingredients=''
+        for i in range(20):
+            if name_ingredients[i]!='':
+                food_ingredients+=name_ingredients[i]+':'+quantity_ingredients[i]+','
+
+        food_instructions=''
+        for i in range(20):
+            if instructions[i]!='':
+                food_instructions+=f'Step {str(i+1)}: '+instructions[i]+'.'
 
         meal = FoodRecipes.add_food(
                 food_name=form.food_name.data,
                 food_category_id=int(form.food_category_id.data),
                 food_area_id=int(form.food_area_id.data),
-                food_ingredients=form.food_ingredients.data,
-                food_instructions=form.food_instructions.data,
-                food_photo_url='/static/images/'+filename,
-                speech=False,
+                food_ingredients=food_ingredients,
+                food_instructions=food_instructions,
+                food_photo_url=form.food_photo_url.data or FoodRecipes.food_photo_url.default.arg,
                 source=True,
                 api_id=None,
                 id_in_api=None,
@@ -800,7 +836,18 @@ def food_recipes_create_by_id(id):
 
     plot_url=plot_nutritions(total_nutritions_dict).plot_figure()
 
-    return render_template('foodrecipes/detailsfoodrecipe.html', meal=meal, total_nutritions=total_nutritions_dict['Calories'], food_nutritions=food_nutritions_dict, food_ingredients=food_ingredients_dict, url=plot_url)
+    if 'food_speech' not in session:
+        session['food_speech']=(meal.id,False)
+        speech=False
+    elif session['food_speech'][0]!=meal.id:
+        session['food_speech']=(meal.id,False)
+        speech=False
+    else:
+        food_id_speech, speech=session['food_speech']
+
+    print('testcreatefood', speech)
+
+    return render_template('foodrecipes/detailsfoodrecipe.html', meal=meal, total_nutritions=total_nutritions_dict['Calories'], food_nutritions=food_nutritions_dict, food_ingredients=food_ingredients_dict, url=plot_url, speech=speech)
 
 
 @app.route('/food/edit/<int:id>', methods=["GET", "POST"])
@@ -818,23 +865,50 @@ def food_recipes_edit_by_id(id):
     form.food_area_id.choices = areas
 
     if form.validate_on_submit():
-        if form.food_photo_url.data!=meal.food_photo_url:
-            food_photo = form.food_photo_url.data
-            filename = secure_filename(food_photo.filename)
-            food_photo.save('static/images/'+filename)
-            meal.food_photo_url='/static/images/'+filename
-
         meal.food_name=form.food_name.data
         meal.food_category_id=int(form.food_category_id.data)
         meal.food_area_id=int(form.food_area_id.data)
-        meal.food_ingredients=form.food_ingredients.data
-        meal.food_instructions=form.food_instructions.data
+        meal.food_photo_url=form.food_photo_url.data
+
+        name_ingredients=request.form.getlist('food_ingredients_name')
+        quantity_ingredients=request.form.getlist('food_ingredients_quantity')
+        instructions=request.form.getlist('food_instructions')
+
+        food_ingredients=''
+        for i in range(20):
+            if name_ingredients[i]!='':
+                food_ingredients+=name_ingredients[i]+':'+quantity_ingredients[i]+','
+
+        food_instructions=''
+        for i in range(20):
+            if instructions[i]!='':
+                food_instructions+=f'Step {str(i+1)}: '+instructions[i]+'.'
+
+        meal.food_ingredients=food_ingredients
+        meal.food_instructions=food_instructions
 
         db.session.commit()
 
         return redirect(f'/food/create/{meal.id}')
 
-    return render_template('foodrecipes/editfoodrecipes.html', form=form, meal_id=id)
+    food_ingredients=[["display:none;",'',''] for _ in range(20)]
+    items=meal.food_ingredients.split(',')
+    for i in range(len(items)):
+        if items[i]!='':
+            temp=items[i].split(':')
+            food_ingredients[i][0]=''
+            food_ingredients[i][1]=temp[0]
+            food_ingredients[i][2]=temp[1]
+
+    food_instructions=[["display:none;",''] for _ in range(20)]
+    items=meal.food_instructions.split('.')
+    for i in range(len(items)):
+        if items[i]!='':
+            temp=items[i].split(':')
+            food_instructions[i][0]=''
+            food_instructions[i][1]=temp[1]
+
+    return render_template('foodrecipes/editfoodrecipes.html', form=form, meal_id=id, food_ingredients=food_ingredients, food_instructions=food_instructions)
 
 
 ##############################################################################
@@ -854,18 +928,27 @@ def create_drink_recipes():
     form.alcoholic.choices = alcoholic
 
     if form.validate_on_submit():
-        drink_photo = form.drink_photo_url.data
-        filename = secure_filename(drink_photo.filename)
-        drink_photo.save('static/images/'+filename)
+        name_ingredients=request.form.getlist('drink_ingredients_name')
+        quantity_ingredients=request.form.getlist('drink_ingredients_quantity')
+        instructions=request.form.getlist('drink_instructions')
+
+        drink_ingredients=''
+        for i in range(20):
+            if name_ingredients[i]!='':
+                drink_ingredients+=name_ingredients[i]+':'+quantity_ingredients[i]+','
+
+        drink_instructions=''
+        for i in range(20):
+            if instructions[i]!='':
+                drink_instructions+=f'Step {str(i+1)}: '+instructions[i]+'.'
 
         drink = DrinkRecipes.add_drink(
                 drink_name=form.drink_name.data,
                 drink_category_id=int(form.drink_category_id.data),
-                drink_ingredients=form.drink_ingredients.data,
-                drink_instructions=form.drink_instructions.data,
-                drink_photo_url='/static/images/'+filename,
+                drink_ingredients=drink_ingredients,
+                drink_instructions=drink_instructions,
+                drink_photo_url=form.drink_photo_url.data or DrinkRecipes.drink_photo_url.default.arg,
                 alcoholic=True if form.alcoholic.data=='1' else False,
-                speech=False,
                 source=True,
                 api_id=None,
                 id_in_api=None,
@@ -903,7 +986,18 @@ def drink_recipes_create_by_id(id):
             temp=item.split(':')
             drink_ingredients_dict[temp[0]]=temp[1]
 
-    return render_template('drinkrecipes/detailsdrinkrecipe.html', drink=drink, drink_ingredients=drink_ingredients_dict)
+    if 'drink_speech' not in session:
+        session['drink_speech']=(drink.id,False)
+        speech=False
+    elif session['drink_speech'][0]!=drink.id:
+        session['drink_speech']=(drink.id,False)
+        speech=False
+    else:
+        drink_id_speech, speech=session['drink_speech']
+
+    print('testcreatedrink', speech)
+
+    return render_template('drinkrecipes/detailsdrinkrecipe.html', drink=drink, drink_ingredients=drink_ingredients_dict, speech=speech)
 
 
 @app.route('/drink/edit/<int:id>', methods=["GET", "POST"])
@@ -921,23 +1015,49 @@ def drink_recipes_edit_by_id(id):
     form.alcoholic.choices = alcoholic_choice
 
     if form.validate_on_submit():
-        if form.drink_photo_url.data!=drink.drink_photo_url:
-            drink_photo = form.drink_photo_url.data
-            filename = secure_filename(drink_photo.filename)
-            drink_photo.save('static/images/'+filename)
-            drink.drink_photo_url='/static/images/'+filename
-
         drink.drink_name=form.drink_name.data
         drink.drink_category_id=int(form.drink_category_id.data)
         drink.alcoholic=True if form.alcoholic.data=='1' else False
-        drink.drink_ingredients=form.drink_ingredients.data
-        drink.drink_instructions=form.drink_instructions.data
+
+        name_ingredients=request.form.getlist('drink_ingredients_name')
+        quantity_ingredients=request.form.getlist('drink_ingredients_quantity')
+        instructions=request.form.getlist('drink_instructions')
+
+        drink_ingredients=''
+        for i in range(20):
+            if name_ingredients[i]!='':
+                drink_ingredients+=name_ingredients[i]+':'+quantity_ingredients[i]+','
+
+        drink_instructions=''
+        for i in range(20):
+            if instructions[i]!='':
+                drink_instructions+=f'Step {str(i+1)}: '+instructions[i]+'.'
+
+        drink.drink_ingredients=drink_ingredients
+        drink.drink_instructions=drink_instructions
 
         db.session.commit()
 
         return redirect(f'/drink/create/{drink.id}')
 
-    return render_template('drinkrecipes/editdrinkrecipes.html', form=form, drink_id=id)
+    drink_ingredients=[["display:none;",'',''] for _ in range(20)]
+    items=drink.drink_ingredients.split(',')
+    for i in range(len(items)):
+        if items[i]!='':
+            temp=items[i].split(':')
+            drink_ingredients[i][0]=''
+            drink_ingredients[i][1]=temp[0]
+            drink_ingredients[i][2]=temp[1]
+
+    drink_instructions=[["display:none;",''] for _ in range(20)]
+    items=drink.drink_instructions.split('.')
+    for i in range(len(items)):
+        if items[i]!='':
+            temp=items[i].split(':')
+            drink_instructions[i][0]=''
+            drink_instructions[i][1]=temp[1]
+
+    return render_template('drinkrecipes/editdrinkrecipes.html', form=form, drink_id=id, drink_ingredients=drink_ingredients, drink_instructions=drink_instructions)
 
 
 ##############################################################################

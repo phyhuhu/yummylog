@@ -59,8 +59,7 @@ class FoodRecipes(db.Model):
     food_area_id = db.Column(db.Integer, db.ForeignKey('food_areas.id', ondelete='CASCADE'))
     food_ingredients = db.Column(db.String)
     food_instructions = db.Column(db.String)
-    food_photo_url = db.Column(db.String)
-    speech = db.Column(db.Boolean, default=False)
+    food_photo_url = db.Column(db.String, default="/static/images/defimage.png")
     source = db.Column(db.Boolean, default=False)
     api_id = db.Column(db.Integer, db.ForeignKey('apis.id', ondelete='CASCADE'))
     id_in_api = db.Column(db.Integer)
@@ -68,7 +67,7 @@ class FoodRecipes(db.Model):
 
     @classmethod
     def add_food(cls, food_name, food_category_id, food_area_id, food_ingredients, food_instructions, 
-    food_photo_url, speech=False, source=False, api_id=None, id_in_api=None, user_id=None):
+    food_photo_url, source=False, api_id=None, id_in_api=None, user_id=None):
         """Add food recipes to database.
         """
 
@@ -79,7 +78,6 @@ class FoodRecipes(db.Model):
             food_ingredients=food_ingredients,
             food_instructions=food_instructions,
             food_photo_url=food_photo_url,
-            speech=speech,
             source=source,
             api_id=api_id,
             id_in_api=id_in_api,
@@ -110,9 +108,8 @@ class DrinkRecipes(db.Model):
     drink_category_id = db.Column(db.Integer, db.ForeignKey('drink_categories.id', ondelete='CASCADE'))
     drink_ingredients = db.Column(db.String)
     drink_instructions = db.Column(db.String)
-    drink_photo_url = db.Column(db.String)
+    drink_photo_url = db.Column(db.String, default="/static/images/defimage.png")
     alcoholic = db.Column(db.Boolean, default=False)
-    speech = db.Column(db.Boolean, default=False)
     source = db.Column(db.Boolean, default=False)
     api_id = db.Column(db.Integer, db.ForeignKey('apis.id', ondelete='CASCADE'))
     id_in_api = db.Column(db.Integer)
@@ -120,7 +117,7 @@ class DrinkRecipes(db.Model):
 
     @classmethod
     def add_drink(cls, drink_name, drink_category_id, drink_ingredients, drink_instructions, 
-    drink_photo_url, alcoholic, speech=False, source=False, api_id=None, id_in_api=None, user_id=None):
+    drink_photo_url, alcoholic, source=False, api_id=None, id_in_api=None, user_id=None):
         """Add drink recipes to database.
         """
 
@@ -131,7 +128,6 @@ class DrinkRecipes(db.Model):
             drink_instructions=drink_instructions,
             drink_photo_url=drink_photo_url,
             alcoholic=alcoholic,
-            speech=speech,
             source=source,
             api_id=api_id,
             id_in_api=id_in_api,

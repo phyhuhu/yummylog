@@ -89,7 +89,6 @@ class DrinkTestCase(TestCase):
             drink_instructions='drink_instructions',
             drink_photo_url='drink_photo_url',
             alcoholic=True,
-            speech=False,
             source=False,
             api_id=2,
             id_in_api=8,
@@ -105,7 +104,6 @@ class DrinkTestCase(TestCase):
         self.assertEqual(d.drink_ingredients, 'drink_ingredients')
         self.assertEqual(d.drink_instructions, 'drink_instructions')
         self.assertEqual(d.drink_photo_url, 'drink_photo_url')
-        self.assertEqual(d.speech, False)
         self.assertEqual(d.source, False)
         self.assertEqual(d.api_id, 2)
         self.assertEqual(d.id_in_api, 8)
@@ -118,7 +116,6 @@ class DrinkTestCase(TestCase):
             drink_instructions='drink_instructions',
             drink_photo_url='drink_photo_url',
             alcoholic=True,
-            speech=False,
             source=True,
             api_id=None,
             id_in_api=None,

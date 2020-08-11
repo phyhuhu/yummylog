@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, TextAreaField, SelectField, RadioField, FileField
+from wtforms import FieldList, FormField, Form, StringField, PasswordField, TextAreaField, SelectField, RadioField, FileField
 from wtforms.validators import DataRequired, Email, Length, EqualTo
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from werkzeug.utils import secure_filename
@@ -83,20 +83,12 @@ class CreateFoodRecipesForm(FlaskForm):
     food_name = StringField('Name', validators=[DataRequired()])
     food_category_id = SelectField('Category', validators=[DataRequired()])
     food_area_id = SelectField('Area', validators=[DataRequired()])
-    food_ingredients = TextAreaField('Ingredients', validators=[DataRequired()],
-                                render_kw={"placeholder": "Please follow the format 'ingredient 1 name: quantity 1, ingredient 2 name: quantity 2,'"})
-    food_instructions = TextAreaField('Instructions', validators=[DataRequired()],
-                                render_kw={"placeholder": "Please follow the format 'Step 1. Step 2.'"})
-    food_photo_url = FileField('Upload Image', validators=[FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')])
+    food_photo_url = StringField('Image URL')
 
 class CreateDrinkRecipesForm(FlaskForm):
     """Create drink recipes."""
 
     drink_name = StringField('Name', validators=[DataRequired()])
     drink_category_id = SelectField('Category', validators=[DataRequired()])
-    drink_ingredients = TextAreaField('Ingredients', validators=[DataRequired()],
-                                render_kw={"placeholder": "Please follow the format 'ingredient 1 name: quantity 1, ingredient 2 name: quantity 2,'"})
-    drink_instructions = TextAreaField('Instructions', validators=[DataRequired()],
-                                render_kw={"placeholder": "Please follow the format 'Step 1. Step 2.'"})
     alcoholic = SelectField('Alcoholic or Not?', validators=[DataRequired()])
-    drink_photo_url = FileField('Upload Image', validators=[FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')])
+    drink_photo_url = StringField('Image URL')

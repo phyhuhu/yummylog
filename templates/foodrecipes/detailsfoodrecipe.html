@@ -31,7 +31,7 @@
       </form>
       {% endif %}
 
-      {% if not meal.speech %}
+      {% if not speech %}
       <form method="POST" action="/food/{{meal.id}}/speech">
         <button type='btn' class="btn btn-outline-secondary btn-sm" style="border-radius: 50%;">
           <i class="fa fa-microphone" style="font-size:20px;"></i> 

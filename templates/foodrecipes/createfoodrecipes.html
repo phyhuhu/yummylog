@@ -9,18 +9,292 @@
         <form method="POST" enctype="multipart/form-data">
           {{ form.hidden_tag() }}
 
-          {% for field in form if field.widget.input_type != 'hidden' %}
           <div class="input-group mb-3">
-            <label>{{ field.label }}:</label>
-            <div class="input-group input-group-sm-3">
-              {{ field(class="form-control") }}
-            </div>
-      
-            {% for error in field.errors %}
-              <p class='text-danger'>{{ error }}</h6>
+            {% for field in form if field.widget.input_type != 'hidden' %}
+              <label>{{ field.label }}:</label>
+              <div class="input-group input-group-sm-3">
+                {{ field(class="form-control") }}
+              </div>
+
+              {% for error in field.errors %}
+                <p class='text-danger'>{{ error }}</h6>
+              {% endfor %}
             {% endfor %}
+
+            <div id="add_food_ingredients">
+              <label>Ingredients:</label>
+              <a id='a_food_ingredients' href="/food/create">Add</a>
+              <a id='r_food_ingredients' href="/food/create">Remove</a>
+
+              <div style="" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Name: </label>
+                <input name="food_ingredients_name" type="text" class="form-control">
+
+                <label>Quantity: </label>
+                <input name="food_ingredients_quantity" type="text" class="form-control">
+              </div>
+            </div>
+
+            <div id="add_food_instructions">
+              <label>Instructions:</label>
+              <a id='a_food_instructions' href="/food/create">Add</a>
+              <a id='r_food_instructions' href="/food/create">Remove</a>
+
+              <div style="" class="input-group">
+                <label>Step 1: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Step 2: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Step 3: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Step 4: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Step 5: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Step 6: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Step 7: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Step 8: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Step 9: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Step 10: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Step 11: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Step 12: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Step 13: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Step 14: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Step 15: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Step 16: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Step 17: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Step 18: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Step 19: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+
+              <div style="display:none;" class="input-group">
+                <label>Step 20: </label>
+                <input name="food_instructions" type="text" class="form-control" size="50">
+              </div>
+            </div>
+
           </div>
-          {% endfor %}
+
           
           <a type="button" class="btn btn-outline-primary" href='/users/{{g.user.id}}'>Cancel</a>
           <button type="submit" class="btn btn-outline-primary">Submit</button>

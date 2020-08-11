@@ -97,7 +97,6 @@ class FoodTestCase(TestCase):
             food_ingredients='food_ingredients',
             food_instructions='food_instructions',
             food_photo_url='food_photo_url',
-            speech=False,
             source=False,
             api_id=1,
             id_in_api=8,
@@ -113,7 +112,6 @@ class FoodTestCase(TestCase):
         self.assertEqual(f.food_ingredients, 'food_ingredients')
         self.assertEqual(f.food_instructions, 'food_instructions')
         self.assertEqual(f.food_photo_url, 'food_photo_url')
-        self.assertEqual(f.speech, False)
         self.assertEqual(f.source, False)
         self.assertEqual(f.api_id, 1)
         self.assertEqual(f.id_in_api, 8)
@@ -126,7 +124,6 @@ class FoodTestCase(TestCase):
             food_ingredients='food_ingredients',
             food_instructions='food_instructions',
             food_photo_url='food_photo_url',
-            speech=False,
             source=True,
             api_id=None,
             id_in_api=None,
