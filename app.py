@@ -560,7 +560,7 @@ def food_recipes_by_id(id):
         for item in full_meal:
             if item[:13]=="strIngredient" and full_meal[item]:
                 food_ingredients_dict[full_meal[item]]=full_meal['strMeasure'+item[13:]]
-                food_ingredients+=full_meal[item]+':'+full_meal['strMeasure'+item[13:]]+', '
+                food_ingredients+=full_meal[item]+':'+full_meal['strMeasure'+item[13:]].replace(' ','')+', '
 
         temp_instructions=full_meal['strInstructions'].replace('\r', ' ').replace('\n', ' ').split('.')
         for i in range(len(temp_instructions)):
@@ -592,7 +592,7 @@ def food_recipes_by_id(id):
         meal=meal_database[0]
 
         food_ingredients_dict={}
-        for item in meal.food_ingredients.replace(' ','').split(','):
+        for item in meal.food_ingredients.split(','):
             if item!='':
                 temp=item.split(':')
                 food_ingredients_dict[temp[0]]=temp[1]
@@ -699,7 +699,7 @@ def drink_recipes_by_id(id):
             if item[:13]=="strIngredient" and full_drink[item]:
                 drink_ingredients_dict[full_drink[item]]=full_drink['strMeasure'+item[13:]]
                 if full_drink['strMeasure'+item[13:]]:
-                    drink_ingredients+=full_drink[item]+':'+full_drink['strMeasure'+item[13:]]+', '
+                    drink_ingredients+=full_drink[item]+':'+full_drink['strMeasure'+item[13:]].replace(' ','')+', '
                 else:
                     drink_ingredients+=full_drink[item]+':'+', '
 
@@ -729,7 +729,7 @@ def drink_recipes_by_id(id):
         drink=drink_database[0]
 
         drink_ingredients_dict={}
-        for item in drink.drink_ingredients.replace(' ','').split(','):
+        for item in drink.drink_ingredients.split(','):
             if item!='':
                 temp=item.split(':')
                 drink_ingredients_dict[temp[0]]=temp[1]
