@@ -592,7 +592,7 @@ def food_recipes_by_id(id):
         meal=meal_database[0]
 
         food_ingredients_dict={}
-        for item in meal.food_ingredients.split(','):
+        for item in meal.food_ingredients.replace(' ','').split(','):
             if item!='':
                 temp=item.split(':')
                 food_ingredients_dict[temp[0]]=temp[1]
@@ -729,7 +729,7 @@ def drink_recipes_by_id(id):
         drink=drink_database[0]
 
         drink_ingredients_dict={}
-        for item in drink.drink_ingredients.split(','):
+        for item in drink.drink_ingredients.replace(' ','').split(','):
             if item!='':
                 temp=item.split(':')
                 drink_ingredients_dict[temp[0]]=temp[1]
@@ -817,7 +817,7 @@ def food_recipes_create_by_id(id):
     meal=FoodRecipes.query.get_or_404(id)
 
     food_ingredients_dict={}
-    for item in meal.food_ingredients.split(','):
+    for item in meal.food_ingredients.replace(' ','').split(','):
         if item!='':
             temp=item.split(':')
             food_ingredients_dict[temp[0]]=temp[1]
@@ -981,7 +981,7 @@ def drink_recipes_create_by_id(id):
     drink=DrinkRecipes.query.get_or_404(id)
 
     drink_ingredients_dict={}
-    for item in drink.drink_ingredients.split(','):
+    for item in drink.drink_ingredients.replace(' ','').split(','):
         if item!='':
             temp=item.split(':')
             drink_ingredients_dict[temp[0]]=temp[1]
