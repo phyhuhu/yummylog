@@ -343,7 +343,10 @@ def user_detail(user_id):
     food_recipes=FoodRecipes.query.filter(FoodRecipes.user_id==user_id)
     drink_recipes=DrinkRecipes.query.filter(DrinkRecipes.user_id==user_id)
 
-    return render_template('users/detail.html', user=user, food_recipes=food_recipes, drink_recipes=drink_recipes, all_food=all_food, all_drink=all_drink)
+    food_recipes_likes=user.food_likes
+    drink_recipes_likes=user.drink_likes
+
+    return render_template('users/detail.html', user=user, food_recipes=food_recipes, drink_recipes=drink_recipes, food_recipes_likes=food_recipes_likes, drink_recipes_likes=drink_recipes_likes, all_food=all_food, all_drink=all_drink)
 
 
 @app.route('/food/<int:food_id>/likes', methods=['POST'])
