@@ -8,7 +8,7 @@ with open('static/data/data.json', 'r') as fp:
 class calculate_nutritions():
 
     def __init__(self, ingredient, quantity):
-        self.ingredient=ingredient
+        self.ingredient=ingredient.title()
         self.quantity=quantity
 
     def find(self):
