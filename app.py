@@ -773,13 +773,13 @@ def create_food_recipes():
         food_ingredients=''
         for i in range(20):
             if name_ingredients[i]!='':
-                name_ingredients[i]=name_ingredients[i].replace(',', ' ')
+                name_ingredients[i]=name_ingredients[i].replace(',', '.')
                 food_ingredients+=name_ingredients[i]+':'+quantity_ingredients[i]+','
 
         food_instructions=''
         for i in range(20):
             if instructions[i]!='':
-                instructions[i]=instructions[i].replace('.', ' ')
+                instructions[i]=instructions[i].replace('.', ',')
                 food_instructions+=f'Step {str(i+1)}: '+instructions[i]+'.'
 
         meal = FoodRecipes.add_food(
@@ -879,13 +879,15 @@ def food_recipes_edit_by_id(id):
         food_ingredients=''
         for i in range(20):
             if name_ingredients[i]!='':
+                name_ingredients[i]=name_ingredients[i].replace(',', '.')
                 food_ingredients+=name_ingredients[i]+':'+quantity_ingredients[i]+','
 
         food_instructions=''
         for i in range(20):
             if instructions[i]!='':
+                instructions[i]=instructions[i].replace('.', ',')
                 food_instructions+=f'Step {str(i+1)}: '+instructions[i]+'.'
-
+                
         meal.food_ingredients=food_ingredients
         meal.food_instructions=food_instructions
 
@@ -1028,11 +1030,13 @@ def drink_recipes_edit_by_id(id):
         drink_ingredients=''
         for i in range(20):
             if name_ingredients[i]!='':
+                name_ingredients[i]=name_ingredients[i].replace(',', '.')
                 drink_ingredients+=name_ingredients[i]+':'+quantity_ingredients[i]+','
 
         drink_instructions=''
         for i in range(20):
             if instructions[i]!='':
+                instructions[i]=instructions[i].replace('.', ',')
                 drink_instructions+=f'Step {str(i+1)}: '+instructions[i]+'.'
 
         drink.drink_ingredients=drink_ingredients
