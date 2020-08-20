@@ -1,10 +1,10 @@
 from ibm_watson import TextToSpeechV1
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-# from secret import IBM_KEY, IBM_URL
+from secret import IBM_KEY_SECRET, IBM_URL_SECRET
 import os
 
-IBM_KEY=os.environ.get('IBM_KEY')
-IBM_URL=os.environ.get('IBM_URL')
+IBM_KEY=os.environ.get('IBM_KEY', IBM_KEY_SECRET)
+IBM_URL=os.environ.get('IBM_URL', IBM_URL_SECRET)
 
 # IBM Watson: text-to-speech
 authenticator = IAMAuthenticator(IBM_KEY)
